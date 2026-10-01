@@ -340,7 +340,7 @@ Make sure MongoDB is running locally before starting the backend.
 ### 1. Clone the repository
 
 ``` bash
-git clone <your-repository-url>
+git clone https://github.com/arpitsingh39/trade-dashboard.git
 cd trade-dashboard
 ```
 
