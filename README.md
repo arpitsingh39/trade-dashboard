@@ -134,6 +134,34 @@ Mock BSE
 The Socket.IO connection is used only for real-time notification. It
 does not replace MongoDB or store the trade data itself.
 
+## Results / Output
+
+### Trade Dashboard
+
+The dashboard displays previously persisted trades immediately and remains fully usable while a new trade pull is in progress.
+
+![Trade Dashboard](./screenshots/dashboard.png)
+
+### Asynchronous Trade Pull
+
+When a trade pull is started, the dashboard remains responsive while the Mock BSE API processes the request asynchronously.
+
+![Trade Pull In Progress](./screenshots/pull-in-progress.png)
+
+### Automatic Real-Time Update
+
+Once the Mock BSE pull completes, the new trades are persisted in MongoDB and the dashboard is automatically updated through Socket.IO without requiring a page refresh or polling.
+
+![Real-Time Update](./screenshots/realtime-update.png)
+
+### Backend Processing
+
+The backend logs demonstrate the complete asynchronous flow from starting the BSE job to receiving the callback, persisting the trades, and notifying connected dashboards.
+
+![Backend Logs - Job Started](./screenshots/backend-logs-1.png)
+
+![Backend Logs - Callback and Database Update](./screenshots/backend-logs-2.png)
+
 ## Tech Stack
 
 ### Frontend
