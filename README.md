@@ -18,13 +18,47 @@ A full-stack trade dashboard that demonstrates asynchronous trade processing whe
 
 ## Architecture
 
-1. React sends a request to start a trade pull.
-2. The backend asks the Mock BSE API to start a background job and returns promptly.
-3. When the job completes, the Mock BSE API sends the generated trades to the backend through a callback.
-4. The backend persists the trades in MongoDB.
-5. Socket.IO notifies the dashboard, which fetches the latest persisted trades.
+```text
+                         React Dashboard
+                    (Existing Trades / Pull New)
+                                |
+                         HTTP + Socket.IO
+                                |
+                                v
+                      Node.js + Express Backend
+                    /trades | /pullTrades | /bse-callback
+                         /             \\
+                        /               \\ Socket.IO:
+              Start pull request         \\ tradesUpdated
+                      |                   \\
+                      v                    v
+                  Mock BSE API          React Dashboard
+               /getTrades | /startPull       |
+                      |                      | GET /trades
+               Background job                |
+                      |                      |
+               Generate new trades           |
+                      |                      |
+               POST /bse-callback             |
+                      |                      |
+                      v                      |
+                 Backend persists trades     |
+                      |                      |
+                      v                      |
+                    MongoDB <----------------+
+```
 
-MongoDB is the persisted source of truth; Socket.IO is used for real-time notifications.
+### Asynchronous flow
+
+1. The dashboard sends `POST /pullTrades`.
+2. The backend asks the Mock BSE API to start a pull and returns without waiting for it to finish.
+3. The Mock BSE API processes the job in the background.
+4. When complete, it sends the generated trades to `POST /bse-callback`.
+5. The backend persists the trades in MongoDB.
+6. The backend emits the Socket.IO event `tradesUpdated`.
+7. The dashboard fetches `GET /trades` and displays the updated data.
+
+The initial HTTP request does not stay open for the full pull duration. MongoDB remains the persisted source of truth, while Socket.IO provides real-time notifications.
 
 ## Screenshots
 
