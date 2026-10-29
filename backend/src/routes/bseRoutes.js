@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Trade = require("../models/TradeTemp");
 
+
 // ============================================
 // MOCK BSE TRADE DATA
 // ============================================
@@ -129,7 +130,7 @@ const generateNewTrades = (count) => {
 
 
     // Keep the queue usable even if one generation fails
-    generationQueue = generationTask.catch(() => {});
+    generationQueue = generationTask.catch(() => { });
 
 
     return generationTask;
@@ -302,18 +303,14 @@ router.post("/startPull", (req, res) => {
             };
 
 
+
+
+            const API_URL = "http://3.110.189.56";
+
             await fetch(
-                "http://localhost:5000/bse-callback",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(callbackData)
-                }
-            );
+    "https://bottles-freeware-night-selling.trycloudflare.com/pullTrades",
+    { method: "POST" }
+);
 
 
             console.log(

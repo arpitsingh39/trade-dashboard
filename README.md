@@ -260,7 +260,7 @@ Supported query parameters:
 Example:
 
 ``` text
-GET http://localhost:5000/getTrades?offset=0&limit=500&delay=2
+GET http://const API_URL = "http://3.110.189.56";/getTrades?offset=0&limit=500&delay=2
 ```
 
 Example response:

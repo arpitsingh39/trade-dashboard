@@ -44,8 +44,9 @@ function App() {
 
         // Connect to Socket.IO
 
-        const socket = io("http://3.110.189.56");
-
+const socket = io(
+    "https://bottles-freeware-night-selling.trycloudflare.com"
+);
         socket.on("connect", () => {
             console.log("Socket connected:", socket.id);
             setConnected(true);

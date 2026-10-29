@@ -6,12 +6,12 @@ const pullTrades = async () => {
     try {
         const delay = process.env.BSE_PULL_DELAY || 10;
 
+
+        const API_URL = "http://3.110.189.56";
+
         const response = await fetch(
-            `http://localhost:5000/startPull?delay=${delay}`,
-            {
-                method: "POST"
-            }
-        );
+    "https://bottles-freeware-night-selling.trycloudflare.com/trades"
+);
 
         const data = await response.json();
 
