@@ -25,8 +25,6 @@ const fetchTrades = async () => {
     }
 };
 
-
-    ```javascript
 const startPull = async () => {
     try {
         setPulling(true);
@@ -43,7 +41,6 @@ const startPull = async () => {
         setPulling(false);
     }
 };
-```
 
     useEffect(() => {
         // Load existing trades
