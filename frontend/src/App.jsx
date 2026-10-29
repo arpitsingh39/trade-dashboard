@@ -11,7 +11,7 @@ function App() {
 
     const fetchTrades = async () => {
         try {
-            const response = await fetch("http://localhost:5000/trades");
+            const response = await fetch("http://3.110.189.56/trades");
 
             const data = await response.json();
 
@@ -23,11 +23,12 @@ function App() {
         }
     };
 
+
     const startPull = async () => {
         try {
             setPulling(true);
 
-            await fetch("http://localhost:5000/pullTrades", {
+            await fetch("http://3.110.189.56/pullTrades", {
                 method: "POST"
             });
 
@@ -42,7 +43,8 @@ function App() {
         fetchTrades();
 
         // Connect to Socket.IO
-        const socket = io("http://localhost:5000");
+
+        const socket = io("http://3.110.189.56");
 
         socket.on("connect", () => {
             console.log("Socket connected:", socket.id);
@@ -82,9 +84,8 @@ function App() {
 
                 <div className="connection">
                     <span
-                        className={`status-dot ${
-                            connected ? "online" : "offline"
-                        }`}
+                        className={`status-dot ${connected ? "online" : "offline"
+                            }`}
                     ></span>
 
                     {connected ? "Live" : "Disconnected"}
