@@ -9,34 +9,41 @@ function App() {
     const [connected, setConnected] = useState(false);
     const [lastPullCount, setLastPullCount] = useState(0);
 
-    const fetchTrades = async () => {
-        try {
-            const response = await fetch("http://3.110.189.56/trades");
+const fetchTrades = async () => {
+    try {
+        const response = await fetch(
+            "https://bottles-freeware-night-selling.trycloudflare.com/trades"
+        );
 
-            const data = await response.json();
+        const data = await response.json();
 
-            setTrades(data.trades);
-        } catch (error) {
-            console.error("Failed to fetch trades:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+        setTrades(data.trades);
+    } catch (error) {
+        console.error("Failed to fetch trades:", error);
+    } finally {
+        setLoading(false);
+    }
+};
 
 
-    const startPull = async () => {
-        try {
-            setPulling(true);
+    ```javascript
+const startPull = async () => {
+    try {
+        setPulling(true);
 
-            await fetch("http://3.110.189.56/pullTrades", {
+        await fetch(
+            "https://bottles-freeware-night-selling.trycloudflare.com/pullTrades",
+            {
                 method: "POST"
-            });
+            }
+        );
 
-        } catch (error) {
-            console.error("Failed to start pull:", error);
-            setPulling(false);
-        }
-    };
+    } catch (error) {
+        console.error("Failed to start pull:", error);
+        setPulling(false);
+    }
+};
+```
 
     useEffect(() => {
         // Load existing trades

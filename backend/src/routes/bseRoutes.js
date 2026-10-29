@@ -302,11 +302,6 @@ router.post("/startPull", (req, res) => {
                 trades: newTrades
             };
 
-
-
-
-            const API_URL = "http://3.110.189.56";
-
             await fetch(
     "https://bottles-freeware-night-selling.trycloudflare.com/pullTrades",
     { method: "POST" }
