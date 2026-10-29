@@ -135,6 +135,42 @@ const generateNewTrades = (count) => {
     return generationTask;
 };
 
+// ============================================
+// SEED INITIAL TRADES INTO MONGODB
+// ============================================
+
+const seedInitialTrades = async () => {
+    try {
+        const initialTrades = trades;
+
+        const operations = initialTrades.map((trade) => ({
+            updateOne: {
+                filter: { tradeId: trade.tradeId },
+                update: { $setOnInsert: trade },
+                upsert: true
+            }
+        }));
+
+        const result = await Trade.bulkWrite(operations, {
+            ordered: false
+        });
+
+        console.log(
+            `Initial trade seeding completed. ` +
+            `Inserted: ${result.upsertedCount}, ` +
+            `already existed: ${initialTrades.length - result.upsertedCount}`
+        );
+    } catch (error) {
+        console.error("Initial trade seeding failed:", error.message);
+        throw error;
+    }
+};
+
+module.exports = {
+    router,
+    seedInitialTrades
+};
+
 
 // ============================================
 // UTILITY FUNCTION
@@ -309,6 +345,3 @@ router.post("/startPull", (req, res) => {
         jobId: jobId
     });
 });
-
-
-module.exports = router;
