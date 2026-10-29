@@ -9,38 +9,35 @@ function App() {
     const [connected, setConnected] = useState(false);
     const [lastPullCount, setLastPullCount] = useState(0);
 
-const fetchTrades = async () => {
-    try {
-        const response = await fetch(
-            "https://bottles-freeware-night-selling.trycloudflare.com/trades"
-        );
+    const fetchTrades = async () => {
+        try {
+            const response = await fetch(
+                "https://trade-dashboard-arpit.duckdns.org/trades"
+            );
 
-        const data = await response.json();
+            const data = await response.json();
 
-        setTrades(data.trades);
-    } catch (error) {
-        console.error("Failed to fetch trades:", error);
-    } finally {
-        setLoading(false);
-    }
-};
+            setTrades(data.trades);
+        } catch (error) {
+            console.error("Failed to fetch trades:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-const startPull = async () => {
-    try {
-        setPulling(true);
+    const startPull = async () => {
+        try {
+            setPulling(true);
 
-        await fetch(
-            "https://bottles-freeware-night-selling.trycloudflare.com/pullTrades",
-            {
+            await fetch("https://trade-dashboard-arpit.duckdns.org/pullTrades", {
                 method: "POST"
-            }
-        );
+            })
 
-    } catch (error) {
-        console.error("Failed to start pull:", error);
-        setPulling(false);
-    }
-};
+        } catch (error) {
+            console.error("Failed to start pull:", error);
+            setPulling(false);
+        }
+    };
 
     useEffect(() => {
         // Load existing trades
@@ -48,9 +45,8 @@ const startPull = async () => {
 
         // Connect to Socket.IO
 
-const socket = io(
-    "https://bottles-freeware-night-selling.trycloudflare.com"
-);
+        const socket = io("https://trade-dashboard-arpit.duckdns.org");
+        
         socket.on("connect", () => {
             console.log("Socket connected:", socket.id);
             setConnected(true);
